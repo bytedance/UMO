@@ -7,9 +7,9 @@
 
 <p align="center"> 
 <a href="https://github.com/bytedance/UMO"><img alt="Build" src="https://img.shields.io/github/stars/bytedance/UMO"></a> 
-<!-- <a href="https://bytedance.github.io/UMO/"><img alt="Build" src="https://img.shields.io/badge/Project%20Page-UMO-blue"></a>  -->
-<!-- <a href="https://arxiv.org/abs/25xx.xxxxx"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a> -->
+<a href="https://bytedance.github.io/UMO/"><img alt="Build" src="https://img.shields.io/badge/Project%20Page-UMO-blue"></a> 
 <a href="https://huggingface.co/bytedance-research/UMO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=Model&color=green"></a>
+<!-- <a href="https://arxiv.org/abs/25xx.xxxxx"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a> -->
 <!-- <a href="https://huggingface.co/spaces/bytedance-research/UMO-FLUX"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=demo&color=orange"></a> -->
 </p>
 
@@ -17,21 +17,16 @@
 ><span style="font-size: 16px">UXO Team</span><br>
 ><span style="font-size: 16px">Intelligent Creation Lab, Bytedance</span></p>
 
-## 🔥 News
-- 2025.09.08 🔥 The inference and evaluation [code](https://github.com/bytedance/UMO) of UMO is released.
-
-## 📖 Introduction
-Recent advancements in image customization exhibit a wide range of application prospects due to stronger customization capabilities. However, since we humans are more sensitive to faces, a significant challenge remains in preserving consistent identity while avoiding identity confusion with multi-reference images, limiting the identity scalability of customization models. To address this, we present *UMO*, a **U**nified **M**ulti-identity **O**ptimization framework, designed to maintain high-fidelity identity preservation and alleviate identity confusion with scalability. With "multi-to-multi matching" paradigm, UMO reformulates multi-identity generation as a global assignment optimization problem and unleashes multi-identity consistency for existing image customization methods generally through reinforcement learning on diffusion models. To facilitate the training of UMO, we develop a scalable customization dataset with multi-reference images, consisting of both synthesised and real parts. Additionally, we propose a new metric to measure identity confusion. Extensive experiments demonstrate that UMO not only improves identity consistency significantly, but also reduces identity confusion on several image customization methods, setting a new state-of-the-art among open-source methods along the dimension of identity preserving.
-
 <p align="center">
     <img src="assets/showcase.jpg" width="1024"/>
 </p>
 
-## 📌 TODO
-- [ ] Release model on huggingface
-- [ ] Release huggingface demo
-- [ ] Release project page
-- [ ] Release training code
+## 🔥 News
+- 2025.09.08 🔥 The project page of [UMO](https://huggingface.co/bytedance-research/UMO) is created.
+- 2025.09.08 🔥 The inference and evaluation [code](https://github.com/bytedance/UMO) of UMO is released.
+
+## 📖 Introduction
+Recent advancements in image customization exhibit a wide range of application prospects due to stronger customization capabilities. However, since we humans are more sensitive to faces, a significant challenge remains in preserving consistent identity while avoiding identity confusion with multi-reference images, limiting the identity scalability of customization models. To address this, we present *UMO*, a **U**nified **M**ulti-identity **O**ptimization framework, designed to maintain high-fidelity identity preservation and alleviate identity confusion with scalability. With "multi-to-multi matching" paradigm, UMO reformulates multi-identity generation as a global assignment optimization problem and unleashes multi-identity consistency for existing image customization methods generally through reinforcement learning on diffusion models. To facilitate the training of UMO, we develop a scalable customization dataset with multi-reference images, consisting of both synthesised and real parts. Additionally, we propose a new metric to measure identity confusion. Extensive experiments demonstrate that UMO not only improves identity consistency significantly, but also reduces identity confusion on several image customization methods, setting a new state-of-the-art among open-source methods along the dimension of identity preserving.
 
 ## ⚡️ Quick Start
 
@@ -221,6 +216,10 @@ responsible usage. The developers are not liable for any misuse of the tool by u
 ## 🚀 Updates
 For the purpose of fostering research and the open-source community, we plan to open-source the entire project, encompassing training, inference, weights, etc. Thank you for your patience and support! 🌟
 
+- [x] Release project page
+- [x] Release model on huggingface
+- [ ] Release huggingface demo
+- [ ] Release training code
 
 ##  Citation
 If UMO is helpful, please help to ⭐ the repo.
