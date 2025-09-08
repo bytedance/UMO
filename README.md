@@ -22,7 +22,8 @@
 </p>
 
 ## 🔥 News
-- 2025.09.08 🔥 The project page of [UMO](https://huggingface.co/bytedance-research/UMO) is created.
+- 2025.09.08 🔥 The [models](https://huggingface.co/bytedance-research/UMO) of UMO based on UNO and OmniGen2 are released. The released version of UMO are more stable than that reported in our paper.
+- 2025.09.08 🔥 The [project page](https://bytedance.github.io/UMO/) of UMO is created.
 - 2025.09.08 🔥 The inference and evaluation [code](https://github.com/bytedance/UMO) of UMO is released.
 
 ## 📖 Introduction
