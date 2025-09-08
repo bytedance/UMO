@@ -13,7 +13,8 @@
 </p>
 
 ><p align="center"> <span style="color:#137cf3; font-family: Gill Sans">Yufeng Cheng,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Wenxu Wu,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Shaojin Wu,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Mengqi Huang,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Fei Ding,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Qian He</span></a> <br> 
-><span style="font-size: 16px">UXO, ByteDance Intelligent Creation Team</span></p>
+><span style="font-size: 16px">UXO Team</span><br>
+><span style="font-size: 16px">Intelligent Creation Lab, Bytedance</span></p>
 
 ## 🔥 News
 - 2025.09.08 🔥 The inference and evaluation [code](https://github.com/bytedance/UMO) of UMO is released.
@@ -26,10 +27,10 @@ Recent advancements in image customization exhibit a wide range of application p
 </p>
 
 ## 📌 TODO
-- [] Release model on huggingface
-- [] Release huggingface demo
-- [] Release project page
-- [] Release training code
+- [ ] Release model on huggingface
+- [ ] Release huggingface demo
+- [ ] Release project page
+- [ ] Release training code
 
 ## ⚡️ Quick Start
 
