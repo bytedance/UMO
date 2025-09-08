@@ -1,0 +1,12 @@
+{
+    "output_image": "assets/examples/OmniGen2/8/result.png",
+    "instruction": "The man from the first image is on the left. The old man with white hair and glasses in the second image is in the middle. The woman from the third image is on the right.",
+    "width_input": 1280,
+    "height_input": 720,
+    "image_input_1": "assets/examples/OmniGen2/8/ref_1.jpg",
+    "image_input_2": "assets/examples/OmniGen2/8/ref_2.jpg",
+    "image_input_3": "assets/examples/OmniGen2/8/ref_3.jpg",
+    "seed_input": 58101,
+    "align_res": false,
+    "output_image_OmniGen2": "assets/examples/OmniGen2/8/result_omnigen2.png"
+}

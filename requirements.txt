@@ -1,0 +1,11 @@
+scikit-image==0.25.1
+kornia==0.6.12
+facexlib==0.3.0
+scipy==1.11.3
+insightface==0.7.3
+onnxruntime==1.22.0
+omegaconf==2.3.0
+protobuf==3.20.3
+pycocotools==2.0.7
+ftfy==6.1.1
+bs4==0.0.1

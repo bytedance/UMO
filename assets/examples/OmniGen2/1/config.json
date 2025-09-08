@@ -1,0 +1,12 @@
+{
+    "output_image": "assets/examples/OmniGen2/1/result.png",
+    "instruction": "Portrait of the woman from the first image.",
+    "width_input": 720,
+    "height_input": 1280,
+    "image_input_1": "assets/examples/OmniGen2/1/ref.webp",
+    "image_input_2": null,
+    "image_input_3": null,
+    "seed_input": 58519,
+    "align_res": false,
+    "output_image_OmniGen2": "assets/examples/OmniGen2/1/result_omnigen2.png"
+}

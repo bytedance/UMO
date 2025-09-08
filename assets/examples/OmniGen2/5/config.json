@@ -1,0 +1,12 @@
+{
+    "output_image": "assets/examples/OmniGen2/5/result.png",
+    "instruction": "make a photo of all these 2 people",
+    "width_input": 1024,
+    "height_input": 1024,
+    "image_input_1": "assets/examples/OmniGen2/5/ref_1.jpg",
+    "image_input_2": "assets/examples/OmniGen2/5/ref_2.png",
+    "image_input_3": null,
+    "seed_input": 0,
+    "align_res": false,
+    "output_image_OmniGen2": "assets/examples/OmniGen2/5/result_omnigen2.png"
+}

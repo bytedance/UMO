@@ -1,0 +1,10 @@
+{
+    "prompt": "Half-body portrait, the man in purple suit and the woman",
+    "image_ref1": "./ref_1.jpg",
+    "image_ref2": "./ref_2.png",
+    "width": 768,
+    "height": 768,
+    "seed": 48659255,
+    "image_result": "./result.png",
+    "image_result_uno": "./result_uno.png"
+}

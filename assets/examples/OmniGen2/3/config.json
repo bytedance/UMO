@@ -1,0 +1,12 @@
+{
+    "output_image": "assets/examples/OmniGen2/3/result.png",
+    "instruction": "Change the style of the first image to Retro comic style",
+    "width_input": 1024,
+    "height_input": 1024,
+    "image_input_1": "assets/examples/OmniGen2/3/ref.png",
+    "image_input_2": null,
+    "image_input_3": null,
+    "seed_input": 22067,
+    "align_res": true,
+    "output_image_OmniGen2": "assets/examples/OmniGen2/3/result_omnigen2.png"
+}

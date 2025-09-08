@@ -1,0 +1,10 @@
+{
+    "prompt": "The man and the woman are sitting in a classroom",
+    "image_ref1": "./ref_1.png",
+    "image_ref2": "./ref_2.webp",
+    "width": 1024,
+    "height": 768,
+    "seed": 95303058,
+    "image_result": "./result.png",
+    "image_result_uno": "./result_uno.png"
+}

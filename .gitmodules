@@ -1,0 +1,9 @@
+[submodule "projects/UNO"]
+	path = projects/UNO
+	url = https://github.com/bytedance/UNO.git
+[submodule "projects/OmniGen2"]
+	path = projects/OmniGen2
+	url = https://github.com/VectorSpaceLab/OmniGen2.git
+[submodule "projects/XVerse"]
+	path = projects/XVerse
+	url = https://github.com/bytedance/XVerse.git

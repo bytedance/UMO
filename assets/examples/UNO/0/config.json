@@ -1,0 +1,9 @@
+{
+    "prompt": "Portrait of the woman",
+    "image_ref1": "./ref.png",
+    "width": 512,
+    "height": 768,
+    "seed": 36476192,
+    "image_result": "./result.png",
+    "image_result_uno": "./result_uno.png"
+}
