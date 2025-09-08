@@ -1,7 +1,8 @@
 <h3 align="center">
-    <img src="assets/logo.png" alt="Logo" style="vertical-align: middle; width: 40px; height: 40px;">
-    UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward
-<!-- </br> via Matching Reward -->
+    <img src="assets/logo.png" alt="Logo" style="vertical-align: middle; width: 100px; height: auto;">
+    </br>
+    UMO: Scaling Multi-Identity Consistency for Image Customization
+</br> via Matching Reward
 </h3>
 
 <p align="center"> 
