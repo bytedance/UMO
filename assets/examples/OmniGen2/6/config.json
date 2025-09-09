@@ -6,7 +6,7 @@
     "image_input_1": "assets/examples/OmniGen2/6/ref_1.webp",
     "image_input_2": "assets/examples/OmniGen2/6/ref_2.webp",
     "image_input_3": null,
-    "seed_input": 37984,
+    "seed_input": 57343,
     "align_res": false,
     "output_image_OmniGen2": "assets/examples/OmniGen2/6/result_omnigen2.png"
 }

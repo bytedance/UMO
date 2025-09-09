@@ -20,6 +20,7 @@ import dataclasses
 import gradio as gr
 import json
 import torch
+from huggingface_hub import hf_hub_download
 from pathlib import Path
 
 from projects.UNO.uno.flux.pipeline import UNOPipeline
@@ -69,36 +70,38 @@ title = f"""
 badges_text = r"""
 <div style="text-align: center; display: flex; justify-content: center; gap: 5px;">
 <a href="https://github.com/bytedance/UMO"><img alt="Build" src="https://img.shields.io/github/stars/bytedance/UMO"></a> 
-<a href="https://bytedance.github.io/UMO/"><img alt="Build" src="https://img.shields.io/badge/Project%20Page-UMO-yellow"></a> 
-<a href="https://arxiv.org/abs/25xx.xxxxx"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a>
-<a href="https://huggingface.co/bytedance-research/UMO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=Model&color=orange"></a>
-<a href="https://huggingface.co/spaces/bytedance-research/UMO-FLUX"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=demo&color=orange"></a>
+<a href="https://bytedance.github.io/UMO/"><img alt="Build" src="https://img.shields.io/badge/Project%20Page-UMO-blue"></a> 
+<a href="https://huggingface.co/bytedance-research/UMO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=Model&color=green"></a>
+<a href="https://arxiv.org/abs/2509.06818"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a>
+<a href="https://huggingface.co/spaces/bytedance-research/UMO_UNO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Demo&message=UMO-UNO&color=orange"></a>
+<a href="https://huggingface.co/spaces/bytedance-research/UMO_OmniGen2"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Demo&message=UMO-OmniGen2&color=orange"></a>
 </div>
 """.strip()
 
 tips = """
- 📌 **What is UMO?**
+📌 ***UMO*** is a **U**nified **M**ulti-identity **O**ptimization framework to *boost the multi-ID fidelity and mitigate confusion* for image customization model, and the latest addition to the UXO family (<a href='https://github.com/bytedance/UMO' target='_blank'> UMO</a>, <a href='https://github.com/bytedance/USO' target='_blank'> USO</a> and <a href='https://github.com/bytedance/UNO' target='_blank'> UNO</a>).
 
-UMO is a Unified Multi-identity Optimization framework for image customization model, and the latest addition to the UXO family (<a href='https://github.com/bytedance/UMO' target='_blank'> UMO</a>, <a href='https://github.com/bytedance/USO' target='_blank'> USO</a> and <a href='https://github.com/bytedance/UNO' target='_blank'> UNO</a>).
+🎨 UMO in the demo is trained based on <a href='https://github.com/bytedance/UNO' target='_blank'> UNO</a>.
 
-It boosts the multi-ID fidelity and mitigates confusion.
+💡 We provide step-by-step instructions in our <a href='https://github.com/bytedance/UMO' target='_blank'> Github Repo</a>. Additionally, try the examples and comparison provided below the demo to quickly get familiar with UMO and spark your creativity!
 
- 💡 **How to use?**
+⚡️ ***Tips for UMO based on UNO***
 
-We provide step-by-step instructions in our <a href='https://github.com/bytedance/UMO' target='_blank'> Github Repo</a>.
-
-Additionally, try the examples and comparison provided below the demo to quickly get familiar with UMO and spark your creativity!
-
-UMO in the demo is trained based on <a href='https://github.com/bytedance/UNO' target='_blank'> UNO</a>.
+- Using description prompt instead of instruction one.
+- Using resolution 768~1024 instead of 512.
+- When reference identities are more than 2, the based model UNO becomes unstable.
 """.strip()
 
 article = """
 ```bibtex
-@article{cheng2025umo,
-  title={UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward},
-  author={Cheng, Yufeng and Wu, Wenxu and Wu, Shaojin and Huang, Mengqi and Ding, Fei and He, Qian},
-  journal={arXiv preprint arXiv:25xx.xxxxx},
-  year={2025}
+@misc{cheng2025umoscalingmultiidentityconsistency,
+      title={UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward}, 
+      author={Yufeng Cheng and Wenxu Wu and Shaojin Wu and Mengqi Huang and Fei Ding and Qian He},
+      year={2025},
+      eprint={2509.06818},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2509.06818}, 
 }
 ```
 """.strip()
@@ -118,9 +121,10 @@ def create_demo(
 
     # create pipeline
     pipeline = UNOPipeline(model_type, device, offload, only_lora=True, lora_rank=512)
-    if lora_path is not None:
-        pipeline.load_ckpt(lora_path)
-        pipeline.model.to(device)
+
+    lora_path = hf_hub_download("bytedance-research/UMO", "UMO_UNO.safetensors") if lora_path is None else lora_path
+    pipeline.load_ckpt(lora_path)
+    pipeline.model.to(device)
 
     # gradio
     with gr.Blocks() as demo:
@@ -134,6 +138,8 @@ def create_demo(
                 with gr.Row():
                     image_prompt1 = gr.Image(label="Ref Img1", visible=True, interactive=True, type="pil")
                     image_prompt2 = gr.Image(label="Ref Img2", visible=True, interactive=True, type="pil")
+                    image_prompt3 = gr.Image(label="Ref Img3", visible=True, interactive=True, type="pil")
+                    image_prompt4 = gr.Image(label="Ref Img4", visible=True, interactive=True, type="pil")
 
                 with gr.Row():
                     with gr.Column():
@@ -158,7 +164,7 @@ def create_demo(
 
             inputs = [
                 prompt, width, height, guidance, num_steps,
-                seed, image_prompt1, image_prompt2,
+                seed, image_prompt1, image_prompt2, image_prompt3, image_prompt4
             ]
             generate_btn.click(
                 fn=pipeline.gradio_generate,
@@ -209,4 +215,4 @@ if __name__ == "__main__":
     args = args_tuple[0]
 
     demo = create_demo(args.name, args.device, args.offload, args.lora_path)
-    demo.launch(server_port=args.port, server_name=args.server_name)
+    demo.launch(server_port=args.port, server_name=args.server_name, ssr_mode=False)

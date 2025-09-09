@@ -33,6 +33,7 @@ import torch
 from torchvision.transforms.functional import to_pil_image, to_tensor
 
 from accelerate import Accelerator
+from huggingface_hub import hf_hub_download
 from peft import LoraConfig
 from safetensors.torch import load_file
 
@@ -43,12 +44,13 @@ from projects.OmniGen2.omnigen2.schedulers.scheduling_dpmsolver_multistep import
 from projects.OmniGen2.omnigen2.utils.img_util import create_collage
 
 NEGATIVE_PROMPT = "(((deformed))), blurry, over saturation, bad anatomy, disfigured, poorly drawn face, mutation, mutated, (extra_limb), (ugly), (poorly drawn hands), fused fingers, messy drawing, broken legs censor, censored, censor_bar"
-ROOT_DIR = "projects/OmniGen2"
 SAVE_DIR = "output/gradio"
 
 pipeline = None
 accelerator = None
 save_images = False
+enable_taylorseer = False
+enable_teacache = False
 
 def load_pipeline(accelerator, weight_dtype, args):
     pipeline = OmniGen2Pipeline.from_pretrained(
@@ -61,20 +63,22 @@ def load_pipeline(accelerator, weight_dtype, args):
         subfolder="transformer",
         torch_dtype=weight_dtype,
     )
-    if args.lora_path is not None:
-        target_modules = ["to_k", "to_q", "to_v", "to_out.0"]
-        lora_config = LoraConfig(
-            r=512,
-            lora_alpha=512,
-            lora_dropout=0,
-            init_lora_weights="gaussian",
-            target_modules=target_modules,
-        )
-        pipeline.transformer.add_adapter(lora_config)
-        lora_state_dict = load_file(args.lora_path, device=accelerator.device.__str__())
-        pipeline.transformer.load_state_dict(lora_state_dict, strict=False)
-        pipeline.transformer.fuse_lora(lora_scale=1, safe_fusing=False, adapter_names=["default"])
-        pipeline.transformer.unload_lora()
+    
+    lora_path = hf_hub_download("bytedance-research/UMO", "UMO_OmniGen2.safetensors") if args.lora_path is None else args.lora_path
+    target_modules = ["to_k", "to_q", "to_v", "to_out.0"]
+    lora_config = LoraConfig(
+        r=512,
+        lora_alpha=512,
+        lora_dropout=0,
+        init_lora_weights="gaussian",
+        target_modules=target_modules,
+    )
+    pipeline.transformer.add_adapter(lora_config)
+    lora_state_dict = load_file(lora_path, device=accelerator.device.__str__())
+    pipeline.transformer.load_state_dict(lora_state_dict, strict=False)
+    pipeline.transformer.fuse_lora(lora_scale=1, safe_fusing=False, adapter_names=["default"])
+    pipeline.transformer.unload_lora()
+    
     if args.enable_sequential_cpu_offload:
         pipeline.enable_sequential_cpu_offload()
     elif args.enable_model_cpu_offload:
@@ -103,8 +107,13 @@ def run(
     max_pixels: int = 1024 * 1024,
     seed_input: int = -1,
     align_res: bool = True,
-    progress=gr.Progress(),
 ):
+    if enable_taylorseer:
+        pipeline.enable_taylorseer = True
+    elif enable_teacache:
+        pipeline.transformer.enable_teacache = True
+        pipeline.transformer.teacache_rel_l1_thresh = 0.05
+
     input_images = [image_input_1, image_input_2, image_input_3]
     input_images = [img for img in input_images if img is not None]
 
@@ -114,15 +123,12 @@ def run(
     if seed_input == -1:
         seed_input = random.randint(0, 2**16 - 1)
 
-    generator = torch.Generator(device=accelerator.device).manual_seed(seed_input)
+    # generator = torch.Generator(device=accelerator.device).manual_seed(seed_input)
+    generator = torch.Generator(device="cpu").manual_seed(seed_input) # set random to cpu to avoid different result on different GPU
 
-    def progress_callback(cur_step, timesteps):
-        frac = (cur_step + 1) / float(timesteps)
-        progress(frac)
-
-    if scheduler == 'euler':
+    if scheduler == 'euler' and not isinstance(pipeline.scheduler, FlowMatchEulerDiscreteScheduler):
         pipeline.scheduler = FlowMatchEulerDiscreteScheduler()
-    elif scheduler == 'dpmsolver++':
+    elif scheduler == 'dpmsolver++' and not isinstance(pipeline.scheduler, DPMSolverMultistepScheduler):
         pipeline.scheduler = DPMSolverMultistepScheduler(
             algorithm_type="dpmsolver++",
             solver_type="midpoint",
@@ -147,14 +153,12 @@ def run(
         num_images_per_prompt=num_images_per_prompt,
         generator=generator,
         output_type="pil",
-        step_func=progress_callback,
     )
-
-    progress(1.0)
 
     vis_images = [to_tensor(image) * 2 - 1 for image in results.images]
     output_image = create_collage(vis_images)
 
+    output_path = ""
     if save_images:
         # Create outputs directory if it doesn't exist
         output_dir = SAVE_DIR
@@ -173,7 +177,7 @@ def run(
             for i, image in enumerate(results.images):
                 image_name, ext = os.path.splitext(output_path)
                 image.save(f"{image_name}_{i}{ext}")
-    return output_image
+    return output_image, output_path
 
 
 def get_examples(base_dir="assets/examples/OmniGen2"):
@@ -200,10 +204,11 @@ title = f"""
 badges_text = r"""
 <div style="text-align: center; display: flex; justify-content: center; gap: 5px;">
 <a href="https://github.com/bytedance/UMO"><img alt="Build" src="https://img.shields.io/github/stars/bytedance/UMO"></a> 
-<a href="https://bytedance.github.io/UMO/"><img alt="Build" src="https://img.shields.io/badge/Project%20Page-UMO-yellow"></a> 
-<a href="https://arxiv.org/abs/25xx.xxxxx"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a>
-<a href="https://huggingface.co/bytedance-research/UMO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=Model&color=orange"></a>
-<a href="https://huggingface.co/spaces/bytedance-research/UMO-FLUX"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=demo&color=orange"></a>
+<a href="https://bytedance.github.io/UMO/"><img alt="Build" src="https://img.shields.io/badge/Project%20Page-UMO-blue"></a> 
+<a href="https://huggingface.co/bytedance-research/UMO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=Model&color=green"></a>
+<a href="https://arxiv.org/abs/2509.06818"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a>
+<a href="https://huggingface.co/spaces/bytedance-research/UMO_UNO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Demo&message=UMO-UNO&color=orange"></a>
+<a href="https://huggingface.co/spaces/bytedance-research/UMO_OmniGen2"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Demo&message=UMO-OmniGen2&color=orange"></a>
 </div>
 """.strip()
 
@@ -229,11 +234,14 @@ tips = """
 
 article = """
 ```bibtex
-@article{cheng2025umo,
-  title={UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward},
-  author={Cheng, Yufeng and Wu, Wenxu and Wu, Shaojin and Huang, Mengqi and Ding, Fei and He, Qian},
-  journal={arXiv preprint arXiv:25xx.xxxxx},
-  year={2025}
+@misc{cheng2025umoscalingmultiidentityconsistency,
+      title={UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward}, 
+      author={Yufeng Cheng and Wenxu Wu and Shaojin Wu and Mengqi Huang and Fei Ding and Qian He},
+      year={2025},
+      eprint={2509.06818},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2509.06818}, 
 }
 ```
 """.strip()
@@ -283,6 +291,25 @@ def main(args):
                     width_input = gr.Slider(
                         label="Width", minimum=256, maximum=2048, value=1024, step=128
                     )
+                
+                with gr.Accordion("Speed Up Options", open=True):
+                    with gr.Row(equal_height=True):
+                        global enable_taylorseer
+                        global enable_teacache
+                        enable_taylorseer = gr.Checkbox(label="Using TaylorSeer to speed up", value=True)
+                        enable_teacache = gr.Checkbox(label="Using TeaCache to speed up", value=False)
+                    
+                    with gr.Row(equal_height=True):
+                        scheduler_input = gr.Dropdown(
+                            label="Scheduler",
+                            choices=["euler", "dpmsolver++"],
+                            value="euler",
+                            info="The scheduler to use for the model.",
+                        )
+
+                        num_inference_steps = gr.Slider(
+                            label="Inference Steps", minimum=20, maximum=100, value=50, step=1
+                        )
                 
                 with gr.Accordion("Advanced Options", open=False):
                     with gr.Row(equal_height=True):
@@ -343,17 +370,6 @@ def main(args):
                     )
 
                     with gr.Row(equal_height=True):
-                        scheduler_input = gr.Dropdown(
-                            label="Scheduler",
-                            choices=["euler", "dpmsolver++"],
-                            value="euler",
-                            info="The scheduler to use for the model.",
-                        )
-
-                        num_inference_steps = gr.Slider(
-                            label="Inference Steps", minimum=20, maximum=100, value=50, step=1
-                        )
-                    with gr.Row(equal_height=True):
                         num_images_per_prompt = gr.Slider(
                             label="Number of images per prompt",
                             minimum=1,
@@ -386,9 +402,11 @@ def main(args):
                     # output image
                     output_image = gr.Image(label="Output Image")
                     global save_images
-                    save_images = gr.Checkbox(label="Save generated images", value=True)
+                    # save_images = gr.Checkbox(label="Save generated images", value=True)
+                    save_images = True
                     with gr.Accordion("Examples Comparison with OmniGen2", open=False):
                         output_image_omnigen2 = gr.Image(label="Generated Image (OmniGen2)")
+                    download_btn = gr.File(label="Download full-resolution", type="filepath", interactive=False)
 
         gr.Markdown(star)
         
@@ -424,7 +442,7 @@ def main(args):
                 seed_input,
                 align_res,
             ],
-            outputs=output_image,
+            outputs=[output_image, download_btn],
         )
 
         gr.Examples(
@@ -446,7 +464,7 @@ def main(args):
         )
 
     # launch
-    demo.launch(share=args.share, server_port=args.port, allowed_paths=[ROOT_DIR], server_name=args.server_name)
+    demo.launch(share=args.share, server_port=args.port, server_name=args.server_name, ssr_mode=False)
 
 def parse_args():
     parser = argparse.ArgumentParser()
