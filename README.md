@@ -9,8 +9,9 @@
 <a href="https://github.com/bytedance/UMO"><img alt="Build" src="https://img.shields.io/github/stars/bytedance/UMO"></a> 
 <a href="https://bytedance.github.io/UMO/"><img alt="Build" src="https://img.shields.io/badge/Project%20Page-UMO-blue"></a> 
 <a href="https://huggingface.co/bytedance-research/UMO"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=Model&color=green"></a>
-<!-- <a href="https://arxiv.org/abs/25xx.xxxxx"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a> -->
-<!-- <a href="https://huggingface.co/spaces/bytedance-research/UMO-FLUX"><img src="https://img.shields.io/static/v1?label=%F0%9F%A4%97%20Hugging%20Face&message=demo&color=orange"></a> -->
+<a href="https://arxiv.org/abs/2509.06818"><img alt="Build" src="https://img.shields.io/badge/arXiv%20paper-UMO-b31b1b.svg"></a>
+<a href="https://huggingface.co/spaces/bytedance-research/UMO_UNO"><img src="https://img.shields.io/static/v1?label=Demo&message=UMO-UNO&color=orange"></a>
+<a href="https://huggingface.co/spaces/bytedance-research/UMO_OmniGen2"><img src="https://img.shields.io/static/v1?label=Demo&message=UMO-OmniGen2&color=orange"></a>
 </p>
 
 ><p align="center"> <span style="color:#137cf3; font-family: Gill Sans">Yufeng Cheng,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Wenxu Wu,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Shaojin Wu,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Mengqi Huang,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Fei Ding,</span><sup></sup></a> <span style="color:#137cf3; font-family: Gill Sans">Qian He</span></a> <br> 
@@ -22,6 +23,8 @@
 </p>
 
 ## 🔥 News
+- 2025.09.09 🔥 The demos of UMO are released: [UMO-UNO](https://huggingface.co/spaces/bytedance-research/UMO_UNO) & [UMO-OmniGen2](https://huggingface.co/spaces/bytedance-research/UMO_OmniGen2)
+- 2025.09.09 🔥 The [paper](https://arxiv.org/abs/2509.06818) of UMO is released.
 - 2025.09.08 🔥 The [models](https://huggingface.co/bytedance-research/UMO) of UMO based on UNO and OmniGen2 are released. The released version of UMO are more stable than that reported in our paper.
 - 2025.09.08 🔥 The [project page](https://bytedance.github.io/UMO/) of UMO is created.
 - 2025.09.08 🔥 The inference and evaluation [code](https://github.com/bytedance/UMO) of UMO is released.
@@ -219,18 +222,21 @@ For the purpose of fostering research and the open-source community, we plan to 
 
 - [x] Release project page
 - [x] Release model on huggingface
-- [ ] Release huggingface demo
+- [x] Release huggingface demo
 - [ ] Release training code
 
 ##  Citation
 If UMO is helpful, please help to ⭐ the repo.
 
 If you find this project useful for your research, please consider citing our paper:
-<!-- ```bibtex
-@article{wu2025less,
-  title={Less-to-More Generalization: Unlocking More Controllability by In-Context Generation},
-  author={Wu, Shaojin and Huang, Mengqi and Wu, Wenxu and Cheng, Yufeng and Ding, Fei and He, Qian},
-  journal={arXiv preprint arXiv:2504.02160},
-  year={2025}
+```bibtex
+@misc{cheng2025umoscalingmultiidentityconsistency,
+      title={UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward}, 
+      author={Yufeng Cheng and Wenxu Wu and Shaojin Wu and Mengqi Huang and Fei Ding and Qian He},
+      year={2025},
+      eprint={2509.06818},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2509.06818}, 
 }
-``` -->
+```
