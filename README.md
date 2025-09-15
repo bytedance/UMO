@@ -18,10 +18,6 @@
 ><span style="font-size: 16px">UXO Team</span><br>
 ><span style="font-size: 16px">Intelligent Creation Lab, Bytedance</span></p>
 
-<p align="center">
-    <img src="assets/showcase.jpg" width="1024"/>
-</p>
-
 ## 🔥 News
 - 2025.09.15 🔥 The [ComfyUI workflows](comfyui/) of UMO are released. We provide several workflow examples with [UMO-UNO](comfyui/UNO) and [UMO-OmniGen2](comfyui/OmniGen2).
 
@@ -38,6 +34,10 @@
 
 ## 📖 Introduction
 Recent advancements in image customization exhibit a wide range of application prospects due to stronger customization capabilities. However, since we humans are more sensitive to faces, a significant challenge remains in preserving consistent identity while avoiding identity confusion with multi-reference images, limiting the identity scalability of customization models. To address this, we present *UMO*, a **U**nified **M**ulti-identity **O**ptimization framework, designed to maintain high-fidelity identity preservation and alleviate identity confusion with scalability. With "multi-to-multi matching" paradigm, UMO reformulates multi-identity generation as a global assignment optimization problem and unleashes multi-identity consistency for existing image customization methods generally through reinforcement learning on diffusion models. To facilitate the training of UMO, we develop a scalable customization dataset with multi-reference images, consisting of both synthesised and real parts. Additionally, we propose a new metric to measure identity confusion. Extensive experiments demonstrate that UMO not only improves identity consistency significantly, but also reduces identity confusion on several image customization methods, setting a new state-of-the-art among open-source methods along the dimension of identity preserving.
+
+<p align="center">
+    <img src="assets/showcase.jpg" width="1024"/>
+</p>
 
 ## ⚡️ Quick Start
 
