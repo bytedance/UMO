@@ -234,14 +234,11 @@ tips = """
 
 article = """
 ```bibtex
-@misc{cheng2025umoscalingmultiidentityconsistency,
-      title={UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward}, 
-      author={Yufeng Cheng and Wenxu Wu and Shaojin Wu and Mengqi Huang and Fei Ding and Qian He},
-      year={2025},
-      eprint={2509.06818},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2509.06818}, 
+@article{cheng2025umo,
+  title={UMO: Scaling Multi-Identity Consistency for Image Customization via Matching Reward},
+  author={Cheng, Yufeng and Wu, Wenxu and Wu, Shaojin and Huang, Mengqi and Ding, Fei and He, Qian},
+  journal={arXiv preprint arXiv:2509.06818},
+  year={2025}
 }
 ```
 """.strip()

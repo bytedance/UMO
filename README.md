@@ -23,6 +23,13 @@
 </p>
 
 ## 🔥 News
+- 2025.09.15 🔥 The [ComfyUI workflows](comfyui/) of UMO are released. We provide several workflow examples with [UMO-UNO](comfyui/UNO) and [UMO-OmniGen2](comfyui/OmniGen2).
+
+<p align="center">
+    <img src="comfyui/UNO/UMO_UNO_1.png" alt="图片1" height="400" width="auto"/>
+    <img src="comfyui/OmniGen2/UMO_OmniGen2_1.png" alt="图片2" height="400" width="auto"/>
+</p>
+
 - 2025.09.09 🔥 The demos of UMO are released: [UMO-UNO](https://huggingface.co/spaces/bytedance-research/UMO_UNO) & [UMO-OmniGen2](https://huggingface.co/spaces/bytedance-research/UMO_OmniGen2)
 - 2025.09.09 🔥 The [paper](https://arxiv.org/abs/2509.06818) of UMO is released.
 - 2025.09.08 🔥 The [models](https://huggingface.co/bytedance-research/UMO) of UMO based on UNO and OmniGen2 are released. The released version of UMO are more stable than that reported in our paper.
@@ -91,6 +98,56 @@ python3 demo/UNO/app.py --lora_path models/bytedance-research/UMO/UMO_UNO.safete
 # UMO (based on OmniGen2)
 python3 demo/OmniGen2/app.py --lora_path models/bytedance-research/UMO/UMO_OmniGen2.safetensors
 ```
+
+### ⚙️ ComfyUI Workflow
+
+#### UMO (based on UNO)
+Since ComfyUI supports [USO](https://docs.comfy.org/tutorials/flux/flux-1-uso), we get workflow of UMO (based on UNO) with removing nodes related to SigLIP style feature, and extend it to multi-reference.
+
+We provide several [example images](comfyui/UNO). You can download the image and drag it into ComfyUI to load the workflow.
+
+**Example with Single Identity**
+
+[Reference Image](assets/examples/OmniGen2/6/ref_2.webp)
+
+<p align="center">
+    <img src="comfyui/UNO/UMO_UNO_1.png" width="auto">
+</p>
+
+**Example with Multi-Identity**
+
+[Reference Image 1](assets/examples/OmniGen2/6/ref_2.webp), [Reference Image 2](https://github.com/VectorSpaceLab/OmniGen2/blob/main/example_images/000050281.jpg)
+
+<p align="center">
+    <img src="comfyui/UNO/UMO_UNO_2.png" width="auto">
+</p>
+
+#### UMO (based on OmniGen2)
+Since ComfyUI supports [OmniGen2](https://docs.comfy.org/tutorials/image/omnigen/omnigen2), we just add a node to load our UMO lora.
+
+Firstly, you should convert our UMO lora checkpoint to ComfyUI format as below:
+
+```python
+python3 comfyui/OmniGen2/convert_ckpt.py
+```
+
+Then, you can download the [example images](comfyui/OmniGen2) and drag them into ComfyUI to load the workflow.
+
+**Example with Single Identity**
+
+[Reference Image](assets/examples/OmniGen2/5/ref_2.png)
+
+<p align="center">
+    <img src="comfyui/OmniGen2/UMO_OmniGen2_1.png" width="auto">
+</p>
+
+**Example with Multi-Identity**
+
+[Reference Image 1](assets/examples/OmniGen2/6/ref_2.webp), [Reference Image 2](assets/examples/OmniGen2/6/ref_1.webp)
+
+<p align="center">
+    <img src="comfyui/OmniGen2/UMO_OmniGen2_2.png" width="auto">
+</p>
 
 ### ✍️ Inference
 
