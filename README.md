@@ -127,7 +127,7 @@ Since ComfyUI supports [OmniGen2](https://docs.comfy.org/tutorials/image/omnigen
 
 Firstly, you should convert our UMO lora checkpoint to ComfyUI format as below:
 
-```python
+```bash
 python3 comfyui/OmniGen2/convert_ckpt.py
 ```
 
